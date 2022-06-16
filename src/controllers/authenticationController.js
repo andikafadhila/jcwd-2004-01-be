@@ -48,7 +48,7 @@ const register = async (req, res) => {
 //Login Controller
 const login = async (req, res) => {
   try {
-    const { data: userData } = await loginAdminService(req.body);
+    const { data: userData } = await loginService(req.body);
 
     //Create data token
     const dataToken = {
@@ -71,7 +71,6 @@ const login = async (req, res) => {
 const loginAdmin = async (req, res) => {
   try {
     const { data: userData } = await loginAdminService(req.body);
-
     //Create data token
     const dataToken = {
       id: userData.id,
@@ -244,6 +243,27 @@ const sendEmailVerification = async (req, res) => {
   }
 };
 
+const test = async (req, res) => {
+  let conn, sql;
+
+  try {
+    conn = await dbCon.promise();
+    sql = `select id, username, email from user where id = ?`;
+    let [result] = await conn.query(sql, 1);
+    return res.status(200).send(result[0]);
+  } catch (error) {
+    return res.status(200).send({ message: error.message || error });
+  }
+};
+
+const checklRole = async (req, res) => {
+  try {
+    return res.status(200).send(req.user);
+  } catch (error) {
+    return res.status(200).send({ message: error.message || error });
+  }
+};
+
 module.exports = {
   register,
   login,
@@ -253,4 +273,6 @@ module.exports = {
   sendEmailVerification,
   verifyAccount,
   loginAdmin,
+  test,
+  checklRole,
 };
