@@ -9,11 +9,12 @@ const {
   login,
   keepLogin,
   forgotPassword,
-  resetPassword,
-  sendEmailVerification,
+  resetForgotPassword,
+  verifyMe,
   verifyAccount,
   loginAdmin,
   test,
+  changeNewPassword,
 } = authenticationController;
 
 Router.post("/register", register); //TESTED AND WORKED
@@ -21,8 +22,9 @@ Router.post("/login", login); //TESTED AND WORKED
 Router.post("/login-admin", loginAdmin); //TESTED AND WORKED
 Router.get("/keeplogin", verifyTokenAccess, keepLogin); //TESTED AND WORKED
 Router.post("/forgotpassword", forgotPassword); //TESTED AND WORKED
-Router.post("/forgotpassword/resetpassword", verifyTokenEmail, resetPassword);
-Router.get("/verifyme", verifyTokenAccess, sendEmailVerification);
+Router.post("/changepassword", verifyTokenAccess, changeNewPassword); //TESTED AND WORKED
+Router.post("/resetpassword", verifyTokenEmail, resetForgotPassword); //TESTED AND WORKED
+Router.get("/verifyme", verifyTokenAccess, verifyMe); //TESTED AND WORKED
 Router.get("/verification", verifyTokenEmail, verifyLastToken, verifyAccount); //TESTED AND WORKED
 Router.get("/test", test); //TESTED AND WORKED
 Router.get("/check-role", verifyTokenAccess, checklRole); //TESTED AND WORKED
